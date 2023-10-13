@@ -3,6 +3,9 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.Map;
+import java.util.List;
+import java.util.ArrayList;
+
 
 
 public class Cli {
@@ -10,47 +13,56 @@ public class Cli {
     public static void main(String[] args) {
 		Scanner scanner = new Scanner(System.in); // Listen to the standard input (console)
 		System.out.print("> "); // Prompt
+		List<String> commandHistory = new ArrayList<>(); // Create a list that stores strings 
+
+		
 		while (true) { // Infinite loop
 			String command = scanner.nextLine(); // Get input from console as a string
 			String output = ""; // A variable named output of type String
+
+			
+				commandHistory.add(command); // With each order we store in the list
+			
 			if (command.equals("exit")) {
 				break; // Forces exit of the while loop
 			}
-			if (command.equals("date")) {
+
+			
+			else if (command.equals("date")) {
 				LocalDate myObj = LocalDate.now(); // Create a date object
-				System.out.println(myObj); // Display the current date
+				output = myObj.toString(); // Display the current date
 			}
-			if (command.equals("time")) {
+			else if (command.equals("time")) {
 				LocalTime myObj = LocalTime.now(); // Create a time object
-				System.out.println(myObj); // Display the current time
+				output = myObj.toString(); // Display the current time
 			}
-			if (command.equals("datetime")) {
+			else if (command.equals("datetime")) {
 				LocalDateTime myObj = LocalDateTime.now(); // Create a date time object
-				System.out.println(myObj); // Display the current date time
+				output = myObj.toString();// Display the current date time
 			}
 
-			if (command.equals("useraccount")) {
+			else if (command.equals("useraccount")) {
 
 			 	
 				String userName = System.getProperty("user.name"); // getProperty use different arguments
-				System.out.println(userName);
+				output = userName.toString();
 			}
 
-			if (command.equals("userhome")) {
+			else if (command.equals("userhome")) {
 
 				String userHomeDirectory = System.getProperty("user.home");
-				System.out.println(userHomeDirectory);
+				output = userHomeDirectory.toString();
 			}
 
-			if (command.equals("os")) {
+			else if (command.equals("os")) {
 
 				String osName = System.getProperty("os.name"); // return operating system name
 				String osVersion = System.getProperty("os.version"); // return operating system version
-				System.out.println(osName + " (" + osVersion + ") ");
+				output = osName.toString() + " (" + osVersion.toString() + ") ";
 			
 			}
 			
-			if (command.equals("printenv")){
+			else if (command.equals("printenv")){
 
 				System.out.print("Please enter the name of the environment variable: ");
 				String variableToLookFor = scanner.nextLine(); // Thanks to the scanner, the name of the input variable can be retrieved
@@ -59,19 +71,20 @@ public class Cli {
 		
 				if (variablesEnv.containsKey(variableToLookFor)) { //containsKey to check if the key (variable name) entered by the user exists in the Map (Map is key value collection )
 					String value = variablesEnv.get(variableToLookFor);
-					System.out.println("The name of the environment variable " + variableToLookFor + " is : " + value);
+					output = "The name of the environment variable " + variableToLookFor.toString() + " is : " + value.toString();
 				} else {
-					System.out.println("The environment variable " + variableToLookFor + " was not found.");
+					output = "The environment variable " + variableToLookFor.toString() + " was not found.";
 				}
 			}
 
-			if (command.equals("echo")){
+			else if (command.startsWith("echo")){
 				
-				System.out.print("Please enter your text :");
-				String userText = scanner.nextLine();
+				for (String historyCommand : commandHistory) {
+					System.out.println(historyCommand);
 
-				System.out.println(userText);
-        
+				}
+			
+				
 				
 		
 			} else {
