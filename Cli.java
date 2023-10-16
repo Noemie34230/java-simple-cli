@@ -16,7 +16,9 @@ public class Cli {
 
 		
 		while (true) { // Infinite loop
+			
 			String command = scanner.nextLine(); // Get input from console as a string
+			String[] commandArgs = command.split(" ",2);
 			String output = ""; // A variable named output of type String
 			
 			if (command.equals("exit")) {
@@ -41,56 +43,52 @@ public class Cli {
 
 			 	
 				String userName = System.getProperty("user.name"); // getProperty use different arguments
-				output = (userName);
+				output = userName;
 			}
 
 			else if (command.equals("userhome")) {
 
 				String userHomeDirectory = System.getProperty("user.home");
-				output = (userHomeDirectory);
+				output = userHomeDirectory;
 			}
 
 			else if (command.equals("os")) {
 
 				String osName = System.getProperty("os.name"); // return operating system name
 				String osVersion = System.getProperty("os.version"); // return operating system version
-				output = (osName) + " ("  + (osVersion) + ") ";
+				output = osName + " ("  + osVersion + ") ";
 			
 			}
 			
-			else if (command.startsWith("printenv")) {
+			else if (commandArgs[0].equals("printenv")) {
 
-			String[] commandArgs = command.split(" "); //The split method divides a string based on a delimiter (for example : a space)
+			 //The split method divides a string based on a delimiter (for example : a space)
 				
 				if (commandArgs.length > 1){
 					String variableToLookFor = System.getenv(commandArgs[1]);
 					if(variableToLookFor==null){
-					output = (commandArgs[1] + " is not name variable");
+					output = "";
 					}else{
-						output = (variableToLookFor);
+						output = variableToLookFor;
 					}
 				}else{
-					output = ("Name variable is not defined");
+					output = "";
 				}
 
 			}
 
 
-			else if (command.startsWith("echo")){
+			else if (commandArgs[0].equals("echo")){
 				
-				
-                String[] commandArgs = command.split(" ");
+				 
+                
 
                
-                if (commandArgs.length == 1) { //If the array is equal to 1, it means that only the Echo command has been entered
-                    output = (""); // Returns an empty string
-                } else {
-                    
+                //If the array is equal to 1, it means that only the Echo command has been entered
                     for (int i = 1; i < commandArgs.length; i++) { //We start at i = 1 to ignore "echo" and we loop on all the elements of the array
-                        output = (commandArgs[i] + " "); //Between each element there is a space
+                        output += commandArgs[i] + " "; //Between each element there is a space
                     }
-                   
-                }
+                
 				
 		
 			} else {
