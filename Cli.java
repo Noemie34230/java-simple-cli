@@ -6,11 +6,9 @@ import java.util.Map;
 import java.util.List;
 import java.util.ArrayList;
 
-
-
 public class Cli {
 
-    public static void main(String[] args) {
+	public static void main(String[] args) {
 		Scanner scanner = new Scanner(System.in); // Listen to the standard input (console)
 		System.out.print("> "); // Prompt
 
@@ -60,21 +58,30 @@ public class Cli {
 			
 			else if (command.startsWith("printenv")){
 
-				
-
 				String[] commandArgs = command.split(" "); //The split method divides a string based on a delimiter (for example : a space)
-				String variableToLookFor = commandArgs[1]; //Get the second array: the name of the variable
+				
+				if (commandArgs.length > 1){
+					String variableToLookFor = commandArgs[1]; //Get the second array: the name of the variable
+				
+				
+                	//System.getenv() returns a map that associates environment variable names (strings) with their corresponding values (also strings).
+                	Map<String, String> variablesEnv = System.getenv();
 
-                //System.getenv() returns a map that associates environment variable names (strings) with their corresponding values (also strings).
-                Map<String, String> variablesEnv = System.getenv();
-
-				//containsKey to check if the key (variable name) entered by the user exists in the Map (Map is key value collection )
-				if (variablesEnv.containsKey(variableToLookFor)) {
-                    String value = variablesEnv.get(variableToLookFor);
-                    output = ( variableToLookFor)+ " " + (value);
-                } else {
-                    output = ("Error");
+					//containsKey to check if the key (variable name) entered by the user exists in the Map (Map is key value collection )
+					if (variablesEnv.containsKey(variableToLookFor)) {
+						String value = variablesEnv.get(variableToLookFor);
+						output = ( variableToLookFor)+ " " + (value);
+					}else {
+					
+					output = ("Name variable is not correct");
+					
                 }
+
+				}
+				else{
+					output = ("Name variable is not defined");
+				}
+
 			}	
 
 
