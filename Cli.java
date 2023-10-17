@@ -18,14 +18,15 @@ public class Cli {
 		while (true) { // Infinite loop
 			
 			String command = scanner.nextLine(); // Get input from console as a string
-			String[] commandArgs = command.split(" ",2);
+			String[] commandArgs = command.split(" ",2); // This code split string in two parts depending on the separator
+			
 			String output = ""; // A variable named output of type String
 			
-			if (command.equals("exit")) {
+			if (command.equals("exit") || command.equals("logout")) {
 				break; // Forces exit of the while loop
 			}
 
-			
+						
 			else if (command.equals("date")) {
 				LocalDate myObj = LocalDate.now(); // Create a date object
 				output = myObj.toString(); // Display the current date
@@ -62,28 +63,26 @@ public class Cli {
 			
 			else if (commandArgs[0].equals("printenv")) {
 
-			 //The split method divides a string based on a delimiter (for example : a space)
+				
 				
 				if (commandArgs.length > 1){
 					String variableToLookFor = System.getenv(commandArgs[1]);
 					if(variableToLookFor==null){
-					output = "";
+					output = "avec arguments";
 					}else{
 						output = variableToLookFor;
 					}
 				}else{
-					output = "";
+					
+					Map<String, String> variablesEnv = System.getenv();
+					output = variablesEnv.toString().replace(';', '\n' );
 				}
 
 			}
 
 
-			else if (commandArgs[0].equals("echo")){
+			else if (commandArgs[0].equals("echo") || commandArgs[0].equals("print") ){
 				
-				 
-                
-
-               
                 //If the array is equal to 1, it means that only the Echo command has been entered
                     for (int i = 1; i < commandArgs.length; i++) { //We start at i = 1 to ignore "echo" and we loop on all the elements of the array
                         output += commandArgs[i] + " "; //Between each element there is a space
