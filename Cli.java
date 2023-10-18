@@ -23,7 +23,8 @@ public class Cli {
 			String jump =  System.getProperty("line.separator" ); // Create global variable for jump line
 			String output = ""; // A variable named output of type String
 			
-			if (commandArgs[0].equals("exit") || command.equals("logout")) {
+
+			if (commandArgs[0].equals("exit") || commandArgs[0].equals("logout")) {
 				break; // Forces exit of the while loop
 			}
 
@@ -80,7 +81,7 @@ public class Cli {
 
 					for (String envName : variablesEnv.keySet()) { 
 						
-						System.out.format(envName + " = " + variablesEnv.get(envName) + jump); 
+						output += envName + " = " + variablesEnv.get(envName) + "\n"; 
 						
 					} 
 				}
@@ -100,26 +101,40 @@ public class Cli {
 			
 			else if (commandArgs[0].equals("ls")) {
 
+				if(commandArgs.length > 1) {
+
 				String directoryPath = commandArgs[1]; // commandArgs[1] is argument (the directory path)
 
 				File directory = new File(directoryPath); //Use package File and create a File objet using the directory path
+				
 				if (directory.exists() && directory.isDirectory()) { // verification of the existence and if the directory path is directory
-					File[] filesAndDirectories = directory.listFiles(); // Create array for store File list
+						File[] filesAndDirectories = directory.listFiles(); // Create array for store File list
 
-					if (filesAndDirectories != null) { // if files and directories is different null
-						for (File fileOrDir : filesAndDirectories) { //for each files and directories get name files and directories and jump
-							System.out.format(fileOrDir.getName() + jump); 
-							
+						if (filesAndDirectories != null) { // if files and directories is different null
+							for (File fileOrDir : filesAndDirectories) { //for each files and directories get name files and directories and jump
+								
+								String listFilesAndDirectories = fileOrDir.getName();
+								
+								String[] arrayListFilesDirectories = listFilesAndDirectories.split(" ");
+
+
+								for (int i = 0; i < arrayListFilesDirectories.length; i++) {
+									output += arrayListFilesDirectories[i] + jump; //Between each element there is a break
+								}
+										
+								
+								
+							}
 						}
 					}
 				} else {
 					output = "Not a directory";
 				}
-					
+			
 		
 			} else {
 				// String concatenation
-				output = "Command '" + command + "' not found.";
+				output = "Command '" + commandArgs[0] + "' not found.";
 			}
 			System.out.println(output); // Print with new line (ln)
 			System.out.print("> "); // Prompt
