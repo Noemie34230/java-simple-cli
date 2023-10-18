@@ -5,7 +5,7 @@ import java.time.LocalTime;
 import java.util.Map;
 import java.util.List;
 import java.util.ArrayList;
-
+import java.io.File;
 
 
 public class Cli {
@@ -19,15 +19,16 @@ public class Cli {
 			
 			String command = scanner.nextLine(); // Get input from console as a string
 			String[] commandArgs = command.split(" ",2); // This code split string in two parts depending on the separator
-			
+			// commandArgs[0] is command and commandArgs[1] is argument
+			String jump =  System.getProperty("line.separator" ); // Create global variable for jump line
 			String output = ""; // A variable named output of type String
 			
-			if (command.equals("exit") || command.equals("logout")) {
+			if (commandArgs[0].equals("exit") || command.equals("logout")) {
 				break; // Forces exit of the while loop
 			}
 
 						
-			else if (command.equals("date")) {
+			else if (commandArgs[0].equals("date")) {
 				LocalDate myObj = LocalDate.now(); // Create a date object
 				output = myObj.toString(); // Display the current date
 			}
@@ -35,25 +36,25 @@ public class Cli {
 				LocalTime myObj = LocalTime.now(); // Create a time object
 				output = myObj.toString(); // Display the current time
 			}
-			else if (command.equals("datetime")) {
+			else if (commandArgs[0].equals("datetime")) {
 				LocalDateTime myObj = LocalDateTime.now(); // Create a date time object
 				output = myObj.toString();// Display the current date time
 			}
 
-			else if (command.equals("useraccount")) {
+			else if (commandArgs[0].equals("useraccount")) {
 
 			 	
 				String userName = System.getProperty("user.name"); // getProperty use different arguments
 				output = userName;
 			}
 
-			else if (command.equals("userhome")) {
+			else if (commandArgs[0].equals("userhome")) {
 
 				String userHomeDirectory = System.getProperty("user.home");
 				output = userHomeDirectory;
 			}
 
-			else if (command.equals("os")) {
+			else if (commandArgs[0].equals("os")) {
 
 				String osName = System.getProperty("os.name"); // return operating system name
 				String osVersion = System.getProperty("os.version"); // return operating system version
@@ -68,14 +69,20 @@ public class Cli {
 				if (commandArgs.length > 1){
 					String variableToLookFor = System.getenv(commandArgs[1]);
 					if(variableToLookFor==null){
-					output = "avec arguments";
+						output = "";
 					}else{
 						output = variableToLookFor;
 					}
 				}else{
 					
 					Map<String, String> variablesEnv = System.getenv();
-					output = variablesEnv.toString().replace(';', '\n' );
+					
+
+					for (String envName : variablesEnv.keySet()) { 
+						
+						System.out.format(envName + " = " + variablesEnv.get(envName) + jump); 
+						
+					} 
 				}
 
 			}
@@ -88,7 +95,27 @@ public class Cli {
                         output += commandArgs[i] + " "; //Between each element there is a space
                     }
                 
-				
+			
+			}		
+			
+			else if (commandArgs[0].equals("ls")) {
+
+				String directoryPath = commandArgs[1]; // commandArgs[1] is argument (the directory path)
+
+				File directory = new File(directoryPath); //Use package File and create a File objet using the directory path
+				if (directory.exists() && directory.isDirectory()) { // verification of the existence and if the directory path is directory
+					File[] filesAndDirectories = directory.listFiles(); // Create array for store File list
+
+					if (filesAndDirectories != null) { // if files and directories is different null
+						for (File fileOrDir : filesAndDirectories) { //for each files and directories get name files and directories and jump
+							System.out.format(fileOrDir.getName() + jump); 
+							
+						}
+					}
+				} else {
+					output = "Not a directory";
+				}
+					
 		
 			} else {
 				// String concatenation
