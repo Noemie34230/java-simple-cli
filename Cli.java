@@ -73,11 +73,12 @@ public class Cli {
 				
 				if (commandArgs.length > 1){
 					String variableToLookFor = System.getenv(commandArgs[1]);
-					if(variableToLookFor==null){
-						output = "";
-					}else{
-						output = variableToLookFor;
-					}
+					output = variableToLookFor==null? "" : variableToLookFor;
+					// if(variableToLookFor==null){ 
+					// 	output = "";
+					// }else{
+					// 	output = variableToLookFor;
+					// }
 				}else{
 					
 					Map<String, String> variablesEnv = System.getenv();
@@ -86,9 +87,9 @@ public class Cli {
 					for (String envName : variablesEnv.keySet()) { 
 						
 						stringEditable.append(envName).append("=").append(variablesEnv.get(envName)).append(jump);
-						output += stringEditable.toString();
-						
-					} 
+					}
+
+					output = stringEditable.toString();
 				}
 
 			}
@@ -102,10 +103,8 @@ public class Cli {
                 //If the array is equal to 1, it means that only the Echo command has been entered
                     for (int i = 1; i < commandArgs.length; i++) { //We start at i = 1 to ignore "echo" and we loop on all the elements of the array
 						stringEditable.append(commandArgs[i]).append(" "); //append is as a concatenation
-						output += stringEditable.toString();
-						
                     }
-                
+					output = stringEditable.toString();
 			
 			}		
 			
@@ -128,12 +127,12 @@ public class Cli {
 									String listFilesAndDirectories = fileOrDir.getName();
 
 									stringEditable.append(listFilesAndDirectories).append(jump); //append is as a concatenation
-									output += stringEditable.toString();
+									
 			
 									// output += listFilesAndDirectories + jump; //Between each element there is a break
-									
-									
 								}
+								output = stringEditable.toString();
+
 							}
 					} else {
 						output = "Not a directory";
