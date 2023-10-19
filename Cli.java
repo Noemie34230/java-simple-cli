@@ -33,7 +33,7 @@ public class Cli {
 				LocalDate myObj = LocalDate.now(); // Create a date object
 				output = myObj.toString(); // Display the current date
 			}
-			else if (command.equals("time")) {
+			else if (commandArgs[0].equals("time")) {
 				LocalTime myObj = LocalTime.now(); // Create a time object
 				output = myObj.toString(); // Display the current time
 			}
@@ -81,7 +81,7 @@ public class Cli {
 
 					for (String envName : variablesEnv.keySet()) { 
 						
-						output += envName + " = " + variablesEnv.get(envName) + "\n"; 
+						output += envName + "=" + variablesEnv.get(envName) + jump; 
 						
 					} 
 				}
@@ -114,21 +114,15 @@ public class Cli {
 								for (File fileOrDir : filesAndDirectories) { //for each files and directories get name files and directories and jump
 									
 									String listFilesAndDirectories = fileOrDir.getName();
-									
-									String[] arrayListFilesDirectories = listFilesAndDirectories.split(" ");
 
-
-									for (int i = 0; i < arrayListFilesDirectories.length; i++) {
-										output += arrayListFilesDirectories[i] + jump; //Between each element there is a break
-									}
-											
+									output += listFilesAndDirectories + jump; //Between each element there is a break
 									
 									
 								}
 							}
-						} else {
-							output = "Not a directory";
-						}
+					} else {
+						output = "Not a directory";
+					}
 				} else {
 					output = "Not a directory";
 				}
