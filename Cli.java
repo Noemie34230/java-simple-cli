@@ -103,30 +103,32 @@ public class Cli {
 
 				if(commandArgs.length > 1) {
 
-				String directoryPath = commandArgs[1]; // commandArgs[1] is argument (the directory path)
+					String directoryPath = commandArgs[1]; // commandArgs[1] is argument (the directory path)
 
-				File directory = new File(directoryPath); //Use package File and create a File objet using the directory path
-				
-				if (directory.exists() && directory.isDirectory()) { // verification of the existence and if the directory path is directory
-						File[] filesAndDirectories = directory.listFiles(); // Create array for store File list
+					File directory = new File(directoryPath); //Use package File and create a File objet using the directory path
+					
+					if (directory.exists() && directory.isDirectory()) { // verification of the existence and if the directory path is directory
+							File[] filesAndDirectories = directory.listFiles(); // Create array for store File list
 
-						if (filesAndDirectories != null) { // if files and directories is different null
-							for (File fileOrDir : filesAndDirectories) { //for each files and directories get name files and directories and jump
-								
-								String listFilesAndDirectories = fileOrDir.getName();
-								
-								String[] arrayListFilesDirectories = listFilesAndDirectories.split(" ");
+							if (filesAndDirectories != null) { // if files and directories is different null
+								for (File fileOrDir : filesAndDirectories) { //for each files and directories get name files and directories and jump
+									
+									String listFilesAndDirectories = fileOrDir.getName();
+									
+									String[] arrayListFilesDirectories = listFilesAndDirectories.split(" ");
 
 
-								for (int i = 0; i < arrayListFilesDirectories.length; i++) {
-									output += arrayListFilesDirectories[i] + jump; //Between each element there is a break
+									for (int i = 0; i < arrayListFilesDirectories.length; i++) {
+										output += arrayListFilesDirectories[i] + jump; //Between each element there is a break
+									}
+											
+									
+									
 								}
-										
-								
-								
 							}
+						} else {
+							output = "Not a directory";
 						}
-					}
 				} else {
 					output = "Not a directory";
 				}
