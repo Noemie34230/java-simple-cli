@@ -19,6 +19,8 @@ public class Cli {
 			
 			String command = scanner.nextLine(); // Get input from console as a string
 			String[] commandArgs = command.split(" ",2); // This code split string in two parts depending on the separator
+			// String commandName = commandArgs[0];
+			// String argument = commandArgs.lenght >1 ? commandArgs[1] : "";
 			// commandArgs[0] is command and commandArgs[1] is argument
 			String jump =  System.getProperty("line.separator" ); // Create global variable for jump line
 			String output = ""; // A variable named output of type String
@@ -33,6 +35,7 @@ public class Cli {
 				LocalDate myObj = LocalDate.now(); // Create a date object
 				output = myObj.toString(); // Display the current date
 			}
+			
 			else if (commandArgs[0].equals("time")) {
 				LocalTime myObj = LocalTime.now(); // Create a time object
 				output = myObj.toString(); // Display the current time
@@ -65,6 +68,7 @@ public class Cli {
 			
 			else if (commandArgs[0].equals("printenv")) {
 
+				StringBuilder stringEditable = new StringBuilder();
 				
 				
 				if (commandArgs.length > 1){
@@ -81,7 +85,8 @@ public class Cli {
 
 					for (String envName : variablesEnv.keySet()) { 
 						
-						output += envName + "=" + variablesEnv.get(envName) + jump; 
+						stringEditable.append(envName).append("=").append(variablesEnv.get(envName)).append(jump);
+						output += stringEditable.toString();
 						
 					} 
 				}
@@ -91,15 +96,22 @@ public class Cli {
 
 			else if (commandArgs[0].equals("echo") || commandArgs[0].equals("print") ){
 				
+				StringBuilder stringEditable = new StringBuilder(); // StringBuilders are like String objects, except that they can be modified.
+				
+
                 //If the array is equal to 1, it means that only the Echo command has been entered
                     for (int i = 1; i < commandArgs.length; i++) { //We start at i = 1 to ignore "echo" and we loop on all the elements of the array
-                        output += commandArgs[i] + " "; //Between each element there is a space
+						stringEditable.append(commandArgs[i]).append(" "); //append is as a concatenation
+						output += stringEditable.toString();
+						
                     }
                 
 			
 			}		
 			
 			else if (commandArgs[0].equals("ls")) {
+
+				StringBuilder stringEditable = new StringBuilder();
 
 				if(commandArgs.length > 1) {
 
@@ -115,7 +127,10 @@ public class Cli {
 									
 									String listFilesAndDirectories = fileOrDir.getName();
 
-									output += listFilesAndDirectories + jump; //Between each element there is a break
+									stringEditable.append(listFilesAndDirectories).append(jump); //append is as a concatenation
+									output += stringEditable.toString();
+			
+									// output += listFilesAndDirectories + jump; //Between each element there is a break
 									
 									
 								}
