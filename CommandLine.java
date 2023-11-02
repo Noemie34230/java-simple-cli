@@ -5,10 +5,7 @@ class CommandLine {
     private String commandName;
     private String argument;
 
-    // constructor
-   //  public CommandLine(){
 
-   //  }
 
     public CommandLine(String command){
         String[] commandArgs = command.split(" ",2);
