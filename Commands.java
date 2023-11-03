@@ -2,7 +2,10 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.Map;
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 
 public class Commands {
     
@@ -127,8 +130,32 @@ public class Commands {
                     } else {
                         return "Not a directory";
                     }
-		
-			} else {
+		}	
+		else if (commandName.equals("cat")) {
+			           if (argument == null) {
+                return "Please specify a path to a text file to read";
+            }
+
+            try {
+                try (// Read the file content and add line numbers
+				BufferedReader reader = new BufferedReader(new FileReader(argument))) {
+					StringBuilder output = new StringBuilder();
+					String line;
+					int lineNumber = 1;
+
+					while ((line = reader.readLine()) != null) {
+					    output.append(lineNumber).append(". ").append(line).append(jump);
+					    lineNumber++;
+					}
+
+					return output.toString();
+				}
+            } catch (IOException e) {
+                return "Error reading file";
+            }
+			
+			
+				} else {
 				// String concatenation
 				return "Command " + commandName + " not found.";
 			}
